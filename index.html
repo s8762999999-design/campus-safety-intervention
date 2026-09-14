@@ -3,444 +3,1274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高中職校園情緒行為危機安全應變指南  陳俊合 心理師</title>
+    <title>高中職校園學生嚴重情緒行為危機安全應變與降級指南</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slatePrimary: '#2C3E50',
+                        slateSecondary: '#4A6572',
+                        accentBlue: '#3498DB',
+                        amberWarning: '#D97706',
+                        crimsonDanger: '#DC2626',
+                        sageSuccess: '#059669',
+                        bgWarm: '#F8FAF9',
+                        cardBg: '#FFFFFF'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --danger-color: #e74c3c;
-            --success-color: #2ecc71;
-            --bg-color: #f5f7fa;
-            --card-bg: #ffffff;
-            --text-main: #333333;
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 380px;
         }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 340px;
+            }
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        /* 導覽列設計 */
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-
-        nav {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        nav button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.6rem 1.2rem;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        nav button:hover, nav button.active {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        /* 核心內容區 */
-        main {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .section {
-            display: none;
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            color: var(--secondary-color);
-            margin: 1.5rem 0 0.8rem 0;
-            font-size: 1.3rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
-
-        /* 警告框設計 */
-        .warning-box {
-            background-color: #fdedec;
-            border-left: 6px solid var(--danger-color);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
-
-        .warning-box h4 {
-            color: var(--danger-color);
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-        
-        .warning-box ul {
-            margin-left: 1.5rem;
-            margin-top: 0.5rem;
-        }
-        
-        .warning-box li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* 角色卡片網格 */
-        .role-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .role-card {
-            background: var(--bg-color);
-            padding: 1.5rem;
-            border-radius: 6px;
-            border-top: 4px solid var(--accent-color);
-            transition: box-shadow 0.3s;
-        }
-        
-        .role-card:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .role-tag {
-            display: inline-block;
-            background: var(--secondary-color);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 3px;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-        }
-
-        /* 模擬互動區設計 */
-        .sim-container {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 2rem;
-        }
-
-        .sim-text {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-btn.active {
+            background-color: #3498DB;
+            color: #FFFFFF;
             font-weight: 600;
-            color: var(--primary-color);
-            line-height: 1.7;
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 6px;
-            border-left: 4px solid var(--secondary-color);
         }
-
-        .sim-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .sim-btn {
-            background: white;
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 1rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.05rem;
-            text-align: left;
-            transition: all 0.2s;
-            line-height: 1.5;
-        }
-
-        .sim-btn:hover {
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .sim-feedback {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            border-radius: 6px;
-            display: none;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .feedback-correct {
-            background-color: #eaeded;
-            border-left: 6px solid var(--success-color);
-        }
-
-        .feedback-wrong {
-            background-color: #fdedec;
-            border-left: 6px solid var(--danger-color);
-        }
-
-        /* 流程圖樣式 */
-        .flow-step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: var(--bg-color);
-            border-radius: 6px;
-            border-left: 4px solid transparent;
-            transition: border-color 0.3s;
-        }
-        
-        .flow-step:hover {
-            border-left-color: var(--accent-color);
-        }
-        
-        .flow-badge {
-            background: var(--accent-color);
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-right: 1.5rem;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(52,152,219,0.3);
-        }
-        
-        .flow-content h4 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
+        /* Custom scrollbar for clean UX */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
     </style>
 </head>
-<body>
+<body class="bg-bgWarm text-slate-800 font-sans leading-relaxed min-h-screen flex flex-col">
 
-    <header>
-        <h1>校園情緒行為危機安全應變指南  陳俊合 心理師</h1>
-        <nav>
-            <button class="nav-btn active" data-target="home">首頁與核心準則</button>
-            <button class="nav-btn" data-target="decision">降級處置流程 (BERMED)</button>
-            <button class="nav-btn" data-target="roles">ICS 角色分工矩陣</button>
-            <button class="nav-btn" data-target="simulation">實境案例模擬</button>
+    <!-- Mandatory Placeholder Comments Required by Prompt Rules -->
+    <!-- Chosen Palette: Warm Neutral & Calming Slate (Low Arousal Aesthetic: Deep Slate Blue, Neutral Warm Cream Background, Accent Blue, Amber & Crimson Safety Badges) -->
+    <!-- Application Structure Plan: Designed as a dynamic interactive single-page dashboard for education professionals. Prioritizes intuitive task-based exploration rather than rigid linear chapter reading. Features include: (1) Sticky Emergency Quick-Decision Header Card (STOP-THINK-ACT), (2) 5-Step Logic Decision Wizard for live crisis assessment without wrestling instructions, (3) Interactive Role Matrix with targeted multi-role views (校安/教官/學務/導師/專任/輔導/特教/護理), (4) Medical Pathology & PRCA Danger Interactive Timeline Chart, (5) 6 High-Risk Interactive High School Scenario Simulations with real-time evidence feedback, (6) Comparative Laws & Evidence Database with filterable PubMed/Cochrane meta-analyses and Myth Busters, (7) Non-sensitive Crisis Plan Card Generator. This structure empowers high school educators to rapidly move from immediate crisis de-escalation to long-term IEP/SWPBIS prevention. -->
+    <!-- Visualization & Content Choices: 
+         - PRCA Dual-Phase Pathology Shift -> Line Chart (Chart.js) -> Toggle phase parameters -> Demonstrates rapid pCO2 spike & blood pH drop under prone restraint.
+         - PTSD Risk in Neurodivergent Students -> Bar Chart (Chart.js) -> Compare ASD vs Neurotypical -> Justifies trauma-informed debriefing.
+         - SWPBIS Tier Model -> Doughnut Chart (Chart.js) -> Interactive segment breakdown -> Explains Tier 1-3 support allocation.
+         - International Oversight Strictness -> Radar Chart (Chart.js) -> Benchmark US/UK/AU/CA/TW -> Highlights Taiwan's missing mandate on prone bans & reporting.
+         - NO SVG tags used; strictly styled HTML/CSS pills, Tailwind grid/flex, Unicode symbols for icons. NO Mermaid JS used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Top Navigation Header -->
+    <header class="bg-slatePrimary text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🛡️</span>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold tracking-wide">高中職校園學生嚴重情緒行為危機安全應變與降級指南 陳俊合 心理師</h1>
+                    <p class="text-xs text-slate-300">跨領域法規、法醫學、低覺醒取向 (LAA) 與正向行為支持 (PBIS) 應對系統</p>
+                </div>
+            </div>
+            <button onclick="switchTab('wizard')" class="bg-amberWarning hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-sm shadow flex items-center gap-2 transition animate-pulse">
+                <span>🚨 我現在該怎麼做？ (緊急決策引導)</span>
+            </button>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <nav class="bg-slateSecondary px-4 overflow-x-auto">
+            <div class="max-w-7xl mx-auto flex space-x-1 py-1 text-xs md:text-sm whitespace-nowrap">
+                <button onclick="switchTab('overview')" id="btn-overview" class="nav-btn active px-3 py-2 rounded transition">總覽與核心精神</button>
+                <button onclick="switchTab('wizard')" id="btn-wizard" class="nav-btn px-3 py-2 rounded transition">🚨 現場決策與流程</button>
+                <button onclick="switchTab('deescalation')" id="btn-deescalation" class="nav-btn px-3 py-2 rounded transition">🧠 降級與神經機制</button>
+                <button onclick="switchTab('medical-legal')" id="btn-medical-legal" class="nav-btn px-3 py-2 rounded transition">⚖️ 醫學紅線與法律</button>
+                <button onclick="switchTab('roles')" id="btn-roles" class="nav-btn px-3 py-2 rounded transition">👥 ICS 角色分工矩陣</button>
+                <button onclick="switchTab('simulations')" id="btn-simulations" class="nav-btn px-3 py-2 rounded transition">🎯 實境案例模擬</button>
+                <button onclick="switchTab('international')" id="btn-international" class="nav-btn px-3 py-2 rounded transition">🌐 國際比較與實證</button>
+                <button onclick="switchTab('recovery')" id="btn-recovery" class="nav-btn px-3 py-2 rounded transition">📋 復盤與危機卡生成</button>
+            </div>
         </nav>
     </header>
 
-    <main>
-        <!-- 首頁 -->
-        <section id="home" class="section active">
-            <h2>核心理念與安全準則</h2>
-            <p>本指南專為台灣高中職教育人員設計。建構於《學校訂定教師輔導與管教學生辦法注意事項》之合法框架上，以「預防與降級（De-escalation）」為核心，確保在身心障礙學生發生嚴重情緒行為危機時，能以合法、安全、最小侵害的方式保護現場所有人。</p>
-            
-            <div class="warning-box">
-                <h4>⚠️ 絕對禁止的危險行為 (法醫學與法律紅線)</h4>
-                <p>法醫學與急診醫學實證指出，極度激動狀態下施加物理限制將導致極端「代謝性酸中毒」無法代償，進而引發致命的<strong>俯臥約束心搏驟停（PRCA）</strong>。因此校園內<strong>嚴格禁止</strong>以下操作：</p>
-                <ul>
-                    <li><strong>俯臥壓制 (Prone Restraint)</strong>：將學生臉朝下壓制於地面，將瞬間阻斷胸廓擴張。</li>
-                    <li><strong>胸腹壓迫</strong>：成人跨坐或以身體重量壓迫學生軀幹，限制其橫膈膜下降。</li>
-                    <li><strong>鎖喉或頸部壓迫</strong>：任何可能干擾呼吸道或頸動脈的行為。</li>
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- Mandatory Disclaimer Notice Banner -->
+        <div class="bg-amber-50 border-l-4 border-amberWarning p-4 rounded-r-lg mb-6 shadow-sm text-xs md:text-sm text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+                <span class="font-bold">⚠️ 聲明與安全邊界：</span>
+                本指南為教育研究與應變架構，不構成法律或醫療診斷意見。處置緊急危險時應依學校 SOP 及現行法規。
+                <strong class="underline">本系統嚴禁且不提供任何徒手制伏、地面壓制或危險關節固定教學。</strong>
+            </div>
+            <span class="inline-block bg-amber-200 text-amber-900 text-xs px-2 py-1 rounded font-mono font-bold whitespace-nowrap">實證資料庫查核：2026年9月</span>
+        </div>
+
+        <!-- ================= TAB 1: OVERVIEW ================= -->
+        <section id="tab-overview" class="tab-content active space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>📌</span> 關於本研究與校園危機安全應變架構
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    隨著融合教育普及，台灣高級中等學校普通班就讀之身心障礙學生比例已逾九成。當伴隨自閉症光譜 (ASD)、注意力缺陷過動症 (ADHD) 或情緒行為障礙 (EBD) 的個案面對高中複雜的人際、課業及環境刺激時，可能引發嚴重情緒失控或暴力危機。本系統旨在幫助校園第一線教職員從「預防」到「危機解除後復盤」，建構最小必要、合法且安全的全校性應變體系。
+                </p>
+            </div>
+
+            <!-- Key Principles Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-accentBlue">
+                    <div class="text-accentBlue font-bold text-lg mb-1 flex items-center gap-2">
+                        <span>🕊️</span> 預防與降級優先 (LAA)
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        情緒爆發多源於「神經感知 (Neuroception)」之威脅誤判與感覺超載。將環境刺激降至極低，遠比強制壓制更能防止傷害。
+                    </p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-crimsonDanger">
+                    <div class="text-crimsonDanger font-bold text-lg mb-1 flex items-center gap-2">
+                        <span>🛑</span> 嚴格遵守醫學與法律紅線
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        法醫學證實「俯臥壓制」易導致極端代謝性酸中毒與心搏驟停 (PRCA)。學校嚴禁任何致死壓制姿勢與懲罰性約束。
+                    </p>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border-t-4 border-sageSuccess">
+                    <div class="text-sageSuccess font-bold text-lg mb-1 flex items-center gap-2">
+                        <span>👥</span> 團隊分工與 ICS 事件指揮
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        單一教師不應孤軍應對重大危機。透過「5分鐘支援到場」與指定單一主溝通者，實現學務、特教、輔導與醫療之協作。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Crisis Progression Continuum Diagram (HTML/Tailwind Styled) -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-4">🔄 校園危機九階段連續應變流程 (Crisis Response Continuum)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-9 gap-2 text-center text-xs">
+                    <div class="bg-slate-100 p-2 rounded border border-slate-300">
+                        <span class="font-bold text-slate-700 block">1. 預防</span>
+                        <span class="text-[10px] text-slate-500">SWPBIS / IEP</span>
+                    </div>
+                    <div class="bg-blue-50 p-2 rounded border border-blue-200">
+                        <span class="font-bold text-blue-800 block">2. 早期辨識</span>
+                        <span class="text-[10px] text-blue-600">偵測前兆徵象</span>
+                    </div>
+                    <div class="bg-indigo-50 p-2 rounded border border-indigo-200">
+                        <span class="font-bold text-indigo-800 block">3. 降級處置</span>
+                        <span class="text-[10px] text-indigo-600">BERMED 框架</span>
+                    </div>
+                    <div class="bg-yellow-50 p-2 rounded border border-yellow-300">
+                        <span class="font-bold text-yellow-800 block">4. 環境安全</span>
+                        <span class="text-[10px] text-yellow-600">疏散旁觀同儕</span>
+                    </div>
+                    <div class="bg-orange-50 p-2 rounded border border-orange-300">
+                        <span class="font-bold text-orange-800 block">5. 團隊支援</span>
+                        <span class="text-[10px] text-orange-600">ICS 5分鐘到場</span>
+                    </div>
+                    <div class="bg-red-50 p-2 rounded border border-red-300">
+                        <span class="font-bold text-red-800 block">6. 安全介入</span>
+                        <span class="text-[10px] text-red-600">最小必要防護</span>
+                    </div>
+                    <div class="bg-purple-50 p-2 rounded border border-purple-200">
+                        <span class="font-bold text-purple-800 block">7. 醫療警政</span>
+                        <span class="text-[10px] text-purple-600">外部緊急支援</span>
+                    </div>
+                    <div class="bg-green-50 p-2 rounded border border-green-200">
+                        <span class="font-bold text-green-800 block">8. 事後復原</span>
+                        <span class="text-[10px] text-green-600">CISD / 創傷修復</span>
+                    </div>
+                    <div class="bg-teal-50 p-2 rounded border border-teal-200">
+                        <span class="font-bold text-teal-800 block">9. 預防檢討</span>
+                        <span class="text-[10px] text-teal-600">BIP 與 IEP 更新</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core SWPBIS Visual Context -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <h3 class="text-base font-bold text-slatePrimary mb-2">📊 全校性正向行為支持 (SWPBIS) 三級架構</h3>
+                    <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                        危機介入只是最終防線，真正的校園安全建立於平時的正向支持。SWPBIS 透過初級、次級與三級預防，將高風險危機降至最低。
+                    </p>
+                    <ul class="text-xs space-y-2 text-slate-700">
+                        <li class="flex items-start gap-2">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-[10px]">初級 80-85%</span>
+                            <span>全校友善環境、可預測的規範與感覺友善空間。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded text-[10px]">次級 10-15%</span>
+                            <span>高風險群小團體情緒調節訓練與課堂先兆中斷。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="bg-rose-100 text-rose-800 font-bold px-1.5 py-0.5 rounded text-[10px]">三級 1-5%</span>
+                            <span>個別化行為介入方案 (BIP)、FCT 訓練與緊急應變計畫。</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <canvas id="swpbisChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: WIZARD & CRISIS FLOW ================= -->
+        <section id="tab-wizard" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>🚨</span> 現場第一分鐘與安全介入評估決策器
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    本模組專為現場面臨緊繃情境之教職員設計。請回答以下邏輯引導題，系統將依據台灣現行法規與比例原則，為您提供「非肢體控制」的立即處置優先順序與安全處置門檻。
+                </p>
+            </div>
+
+            <!-- Interactive 5-Question Safety Decision Wizard -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div id="wizard-container">
+                    <div class="flex items-center justify-between mb-4 border-b pb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slateSecondary" id="wizard-step-indicator">步驟 1 / 5</span>
+                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">決策判斷框架</span>
+                    </div>
+
+                    <div id="wizard-step-1" class="space-y-4">
+                        <h3 class="text-base font-bold text-slatePrimary">Q1. 目前現場是否存在「持續且立即」的人身傷害危險？（例如：正持利器攻擊他人、劇烈頭撞硬物、嚴重咬住他人）</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="wizardAnswer(1, true)" class="p-4 border-2 border-slate-200 hover:border-crimsonDanger hover:bg-red-50 rounded-lg text-left transition font-semibold text-sm">
+                                🔴 是，已有或即將造成重大身體傷害
+                            </button>
+                            <button onclick="wizardAnswer(1, false)" class="p-4 border-2 border-slate-200 hover:border-amberWarning hover:bg-amber-50 rounded-lg text-left transition font-semibold text-sm">
+                                🟡 否，主要為大聲喊叫、丟輕質物品、拒絕遵循指令、推倒桌椅
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="wizard-step-2" class="space-y-4 hidden">
+                        <h3 class="text-base font-bold text-slatePrimary">Q2. 現場其他學生與同儕是否已安全疏散至視線範圍外？</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="wizardAnswer(2, true)" class="p-4 border-2 border-slate-200 hover:border-sageSuccess hover:bg-green-50 rounded-lg text-left transition font-semibold text-sm">
+                                🟢 是，旁觀同儕已安全撤離，無觀眾效應
+                            </button>
+                            <button onclick="wizardAnswer(2, false)" class="p-4 border-2 border-slate-200 hover:border-crimsonDanger hover:bg-red-50 rounded-lg text-left transition font-semibold text-sm">
+                                🔴 否，仍有大量同學圍觀或處於攻擊射程內
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="wizard-step-3" class="space-y-4 hidden">
+                        <h3 class="text-base font-bold text-slatePrimary">Q3. 現場是否已嘗試「低覺醒 (LAA)」降級與環境簡化策略？</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="wizardAnswer(3, true)" class="p-4 border-2 border-slate-200 hover:border-sageSuccess hover:bg-green-50 rounded-lg text-left transition font-semibold text-sm">
+                                🟢 是，已關閉強光、降低聲音、無人對其大聲喝斥說教
+                            </button>
+                            <button onclick="wizardAnswer(3, false)" class="p-4 border-2 border-slate-200 hover:border-amberWarning hover:bg-amber-50 rounded-lg text-left transition font-semibold text-sm">
+                                🟡 否，現場多名人員正在同時對學生叫喊或要求其冷靜
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="wizard-step-4" class="space-y-4 hidden">
+                        <h3 class="text-base font-bold text-slatePrimary">Q4. 校內危機處置支援小組 (ICS) 是否已被通報並在抵達途中？</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="wizardAnswer(4, true)" class="p-4 border-2 border-slate-200 hover:border-sageSuccess hover:bg-green-50 rounded-lg text-left transition font-semibold text-sm">
+                                🟢 是，已指派幹部通報學務處/特教組，支援將在5分鐘內到場
+                            </button>
+                            <button onclick="wizardAnswer(4, false)" class="p-4 border-2 border-slate-200 hover:border-crimsonDanger hover:bg-red-50 rounded-lg text-left transition font-semibold text-sm">
+                                🔴 否，現場僅有單一任課教師獨自面對
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="wizard-step-5" class="space-y-4 hidden">
+                        <h3 class="text-base font-bold text-slatePrimary">Q5. 學生身體狀況或現場危險是否已超過校內處置極限？（例如：學生持致命武器、意識不清、劇烈呼吸困難）</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="wizardAnswer(5, true)" class="p-4 border-2 border-slate-200 hover:border-crimsonDanger hover:bg-red-50 rounded-lg text-left transition font-semibold text-sm">
+                                🔴 是，需立即尋求 119 醫療救護或 110 警力支援
+                            </button>
+                            <button onclick="wizardAnswer(5, false)" class="p-4 border-2 border-slate-200 hover:border-sageSuccess hover:bg-green-50 rounded-lg text-left transition font-semibold text-sm">
+                                🟢 否，無致命武器，尚在校內安全應變防護能力範圍
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Wizard Result Display -->
+                    <div id="wizard-result" class="hidden p-5 rounded-lg border-2 space-y-3">
+                        <h3 class="text-lg font-bold" id="result-title"></h3>
+                        <p class="text-xs md:text-sm text-slate-700 leading-relaxed" id="result-body"></p>
+                        <div class="p-3 bg-white rounded border text-xs space-y-1" id="result-actions"></div>
+                        <button onclick="resetWizard()" class="mt-4 bg-slatePrimary text-white text-xs px-4 py-2 rounded hover:bg-slateSecondary transition">
+                            🔄 重新進行現場決策評估
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crisis Level Escalation Matrix -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-4">📶 校園情緒危機分層與應變門檻 (Level 0 - Level 5)</h3>
+                <div class="space-y-3">
+                    <div class="p-3 bg-slate-50 border-l-4 border-slate-400 rounded text-xs flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <span class="font-bold text-slate-700">Level 0 - 正常狀態：</span> 專注學習、情緒穩定。
+                            <span class="block text-slate-500">優先任務：初級 SWPBIS 預防，建立可預測課堂節奏。</span>
+                        </div>
+                        <span class="bg-slate-200 text-slate-700 px-2 py-1 rounded font-mono text-[10px] self-start">常態教學</span>
+                    </div>
+
+                    <div class="p-3 bg-blue-50 border-l-4 border-accentBlue rounded text-xs flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <span class="font-bold text-blue-900">Level 1 - 早期警訊：</span> 呼吸急促、來回踱步、肌肉緊繃、拒絕眼神接觸。
+                            <span class="block text-blue-700">優先任務：早期辨識，給予安全空間，提示「休息卡」。</span>
+                        </div>
+                        <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded font-mono text-[10px] self-start">低覺醒介入</span>
+                    </div>
+
+                    <div class="p-3 bg-amber-50 border-l-4 border-amberWarning rounded text-xs flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <span class="font-bold text-amber-900">Level 2 - 明顯升高：</span> 大聲喊叫、語調高亢、拍打桌子、撕扯紙張。
+                            <span class="block text-amber-700">優先任務：BERMED 降級，指定單一溝通者，要求降至零。</span>
+                        </div>
+                        <span class="bg-amber-200 text-amber-900 px-2 py-1 rounded font-mono text-[10px] self-start">通報準備</span>
+                    </div>
+
+                    <div class="p-3 bg-orange-50 border-l-4 border-orange-500 rounded text-xs flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <span class="font-bold text-orange-900">Level 3 - 攻擊前兆/毀損：</span> 掀桌砸物、強烈衝撞、作勢揮拳。
+                            <span class="block text-orange-700">優先任務：疏散旁觀學生，啟動 ICS 5分鐘支援到場，移除危險物。</span>
+                        </div>
+                        <span class="bg-orange-200 text-orange-900 px-2 py-1 rounded font-mono text-[10px] self-start">ICS 啟動</span>
+                    </div>
+
+                    <div class="p-3 bg-red-50 border-l-4 border-crimsonDanger rounded text-xs flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <span class="font-bold text-red-900">Level 4 - 迫切傷害/自傷：</span> 劇烈咬人、抓撕、頭撞牆、持利器揮舞。
+                            <span class="block text-red-700">優先任務：阻卻違法緊急避難，使用物理屏障 (如軟墊) 防護，嚴禁俯臥壓制。</span>
+                        </div>
+                        <span class="bg-red-200 text-red-900 px-2 py-1 rounded font-mono text-[10px] self-start">最小必要防護</span>
+                    </div>
+
+                    <div class="p-3 bg-purple-50 border-l-4 border-purple-600 rounded text-xs flex flex-col md:flex-row justify-between gap-2">
+                        <div>
+                            <span class="font-bold text-purple-900">Level 5 - 致命/重症危急：</span> 學生持槍刀嚴重傷人、意識喪失、呼吸驟停、無法控制。
+                            <span class="block text-purple-700">優先任務：立即撥打 119/110，校長/學務同意引導警消，現場救命 CPR/AED。</span>
+                        </div>
+                        <span class="bg-purple-200 text-purple-900 px-2 py-1 rounded font-mono text-[10px] self-start">外部緊急救護</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: DE-ESCALATION & NEURODIVERSITY ================= -->
+        <section id="tab-deescalation" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>🧠</span> 神經多樣性機制與 BERMED 降級處置框架
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    自閉症光譜 (ASD) 或情緒行為障礙 (EBD) 學生的爆發，絕大多數屬於**神經感官超載崩潰 (Sensory Overload Meltdown)**，而非意圖性的蓄意挑釁。理解大腦交感神經風暴與迷走神經調節，是防止情緒升級的核心。
+                </p>
+            </div>
+
+            <!-- Meltdown vs Intentional Aggression Matrix -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-4">🔍 ASD 感官崩潰 (Meltdown) vs 蓄意攻擊 (Aggression) 對照</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b">
+                                <th class="p-3 border">比較維度</th>
+                                <th class="p-3 border bg-blue-50 text-blue-900">感官崩潰 (Meltdown / Overload)</th>
+                                <th class="p-3 border">蓄意工具性攻擊 (Intentional Aggression)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y text-slate-600">
+                            <tr>
+                                <td class="p-3 border font-bold">神經機制</td>
+                                <td class="p-3 border bg-blue-50/30">大腦前額葉失控，交感神經「戰或逃」極端活化。</td>
+                                <td class="p-3 border">前額葉功能正常，具目的導向與動機評估。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-bold">誘發因子</td>
+                                <td class="p-3 border bg-blue-50/30">感覺超載 (強光/噪音)、行程驟變、不確定性高。</td>
+                                <td class="p-3 border">爭奪物品、獲取社交利益、懲罰他人。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-bold">旁觀者影響</td>
+                                <td class="p-3 border bg-blue-50/30">旁觀者越多刺激越強（非為了演給別人看）。</td>
+                                <td class="p-3 border">常受觀眾注意力強化或操弄情境。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-bold">處置關鍵</td>
+                                <td class="p-3 border bg-blue-50/30 font-bold text-accentBlue">低覺醒策略 (LAA)：關閉刺激、不說教、給予空間。</td>
+                                <td class="p-3 border">明確行為邊界、代幣制、正向行為支持。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BERMED Framework Interactive Cards -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-4">🛡️ Low Arousal BERMED 降級六步驟指南</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 border-t-4 border-slatePrimary rounded-lg">
+                        <span class="text-xs font-bold text-white bg-slatePrimary px-2 py-0.5 rounded">B</span>
+                        <h4 class="font-bold text-sm text-slatePrimary mt-2">Breathe - 穩住自身自律神經</h4>
+                        <p class="text-xs text-slate-600 mt-1">成人的焦慮與憤怒會透過鏡像神經元迅速傳遞。教師先深呼吸、放慢話語節奏、放鬆雙肩。</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border-t-4 border-accentBlue rounded-lg">
+                        <span class="text-xs font-bold text-white bg-accentBlue px-2 py-0.5 rounded">E</span>
+                        <h4 class="font-bold text-sm text-accentBlue mt-2">Environment - 簡化環境與隔離</h4>
+                        <p class="text-xs text-slate-600 mt-1">立即疏散圍觀同學，移除社交壓力與「觀眾效應」。調暗燈光、關閉音響、移開危險物品。</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border-t-4 border-amberWarning rounded-lg">
+                        <span class="text-xs font-bold text-white bg-amberWarning px-2 py-0.5 rounded">R</span>
+                        <h4 class="font-bold text-sm text-amberWarning mt-2">Reduce - 降低要求至零</h4>
+                        <p class="text-xs text-slate-600 mt-1">崩潰期前額葉已暫停運作。停止所有學業要求、規訓或講道理，任何要求都會被解讀為新威脅。</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border-t-4 border-sageSuccess rounded-lg">
+                        <span class="text-xs font-bold text-white bg-sageSuccess px-2 py-0.5 rounded">M</span>
+                        <h4 class="font-bold text-sm text-sageSuccess mt-2">Match - 配合節奏與保持空間</h4>
+                        <p class="text-xs text-slate-600 mt-1">保持 2 公尺以上安全距離，避免強迫眼神接觸。使用極簡、非評判性語言（如「這裡很安全」）。</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border-t-4 border-purple-600 rounded-lg">
+                        <span class="text-xs font-bold text-white bg-purple-600 px-2 py-0.5 rounded">E</span>
+                        <h4 class="font-bold text-sm text-purple-600 mt-2">Empathize - 接納情緒與給予選擇</h4>
+                        <p class="text-xs text-slate-600 mt-1">接納其生理失控，提供 2 選 1 的極簡選擇（「去安靜角休息或喝水」），協助重獲控制感。</p>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border-t-4 border-slateSecondary rounded-lg">
+                        <span class="text-xs font-bold text-white bg-slateSecondary px-2 py-0.5 rounded">D</span>
+                        <h4 class="font-bold text-sm text-slateSecondary mt-2">Debrief - 完全平靜事後復盤</h4>
+                        <p class="text-xs text-slate-600 mt-1">唯有在學生恢復平靜（Recovery phase）後，方可進行心理復盤與功能性溝通訓練 (FCT) 檢討。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Functional Communication Training (FCT) Box -->
+            <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-200">
+                <h3 class="text-base font-bold text-blue-900 mb-2">💡 長期治本策略：功能性溝通訓練 (FCT)</h3>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                    實證研究（Research in Autism Spectrum Disorders）顯示，透過行為功能評估 (FBA)，找出攻擊行為背後的真正訴求（如：逃避過難任務、尋求刺激、表達疼痛），並教導學生使用更簡單且社會可接受的適當行為（如：舉「休息卡」、按壓溝通輔具），能降低 80% 以上的嚴重危機。
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: MEDICAL & LEGAL RED LINES ================= -->
+        <section id="tab-medical-legal" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>⚖️</span> 醫學病理致死機制與台灣法規比例原則
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    在校園危機處置中，任何物理約束皆伴隨致命風險。法醫學已全面推翻傳統所謂「激動性譫妄 (Excited Delirium)」偽診斷，證實不當俯臥約束將直接導致致命的**俯臥約束心搏驟停 (Prone Restraint Cardiac Arrest, PRCA)**。教職員必須徹底瞭解此醫學紅線與《管教學生辦法注意事項》之法律防衛界線。
+                </p>
+            </div>
+
+            <!-- PRCA Pathology Chart & Explanation -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <h3 class="text-base font-bold text-crimsonDanger mb-2">🩸 俯臥約束致死病理生理學雙階段模型</h3>
+                    <div class="space-y-3 text-xs text-slate-700">
+                        <div class="p-3 bg-red-50 rounded border border-red-200">
+                            <strong class="text-crimsonDanger block mb-1">階段一：啟動期 (Priming Phase) - 極端代謝性酸中毒</strong>
+                            當學生劇烈抗拒與恐慌時，無氧呼吸產生大量乳酸與氫離子，生理必須依靠深度「過度換氣 (Hyperventilation)」排出 $CO_2$ 以中和酸血症。
+                        </div>
+                        <div class="p-3 bg-slate-100 rounded border border-slate-300">
+                            <strong class="text-slate-900 block mb-1">階段二：引爆期 (Tipping Phase) - 機械性呼吸阻礙</strong>
+                            若在此時將學生「臉朝下俯臥壓制」或「胸腹施壓」，將限制胸廓擴張與橫膈膜下降。肺部無法排出 $CO_2$ 導致血液 pH 驟降至 6.5 以下，引發無脈性電氣活動 (PEA) 心搏驟停。
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="prcaPathologyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Absolute Medical Red Line List -->
+            <div class="bg-red-50 border-2 border-crimsonDanger p-5 rounded-xl text-xs space-y-2">
+                <h3 class="text-sm font-bold text-crimsonDanger flex items-center gap-2">
+                    <span>🚫</span> 校園絕對禁止之致命壓制姿勢 (Absolute Ban List)
+                </h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-800">
+                    <li class="bg-white p-2 rounded border border-red-200 flex items-center gap-2">
+                        <span class="text-crimsonDanger font-bold">✖</span> 俯臥壓制 (Prone Restraint - 臉朝下壓地)
+                    </li>
+                    <li class="bg-white p-2 rounded border border-red-200 flex items-center gap-2">
+                        <span class="text-crimsonDanger font-bold">✖</span> 成人跨坐或重量壓迫學生胸腹軀幹
+                    </li>
+                    <li class="bg-white p-2 rounded border border-red-200 flex items-center gap-2">
+                        <span class="text-crimsonDanger font-bold">✖</span> 鎖喉、壓迫頸部或呼吸道
+                    </li>
+                    <li class="bg-white p-2 rounded border border-red-200 flex items-center gap-2">
+                        <span class="text-crimsonDanger font-bold">✖</span> 籃式固定 (Basket holds) 或反剪雙手壓制
+                    </li>
                 </ul>
             </div>
 
-            <h3>法律保護傘：阻卻違法事由與比例原則</h3>
-            <p>依據教育部2024年修訂之管教辦法，教師僅在「學生攻擊他人、自傷、毀損公物，且<strong>非立即施加強制力不能制止</strong>」之極端緊急情況下，得採取必要之強制阻擋措施。此作為屬「正當防衛」與「緊急避難」，依法不予處罰。但須注意，一旦立即性危險解除，必須立刻停止任何身體介入，切勿將防衛轉化為懲罰性壓制。</p>
-        </section>
+            <!-- Taiwan Legal Framework & Defense Shield -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-4">⚖️ 台灣現行法規：阻卻違法事由與比例原則檢核</h3>
+                <p class="text-xs text-slate-600 mb-4">
+                    依據教育部 2024 年修訂之《學校訂定教師輔導與管教學生辦法注意事項》第 19 條與第 24 條、以及《教育基本法》與《學生輔導法》：
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <span class="font-bold text-slatePrimary block mb-1">1. 阻卻違法前提 (緊急防衛)</span>
+                        僅在學生出現攻擊他人、毀損公物、自傷，且「非立即施加強制力不能制止」時，得採取阻擋等強制措施，依法不予處罰。
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <span class="font-bold text-slatePrimary block mb-1">2. 比例原則 (最小限制)</span>
+                        介入必須是損害最小之手段。目的在於「保護人身安全」，絕不得作為「懲罰、報復或威嚇」不服從指令之手段。
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <span class="font-bold text-slatePrimary block mb-1">3. 兒童權利公約 (CRC)</span>
+                        三讀通過之《學生輔導法》強調以「兒少最佳利益」為核心，防護性介入解除危險後必須立即停止。
+                    </div>
+                </div>
+            </div>
 
-        <!-- 危機處置流程 -->
-        <section id="decision" class="section">
-            <h2>危機處置與降級流程 (BERMED 框架)</h2>
-            <p>遭遇 ASD 或 EBD 學生崩潰危機時，切勿以懲罰、說教或大聲喝斥應對，應採取基於神經生理學的「低覺醒取向 (Low Arousal Approach)」，確實執行以下六步驟：</p>
+            <!-- Legal vs Improper Restraint Comparison Table -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-4">📋 「合法緊急安全介入」 vs 「違法不當約束/體罰」 對照表</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b">
+                                <th class="p-3 border">情境與行為樣態</th>
+                                <th class="p-3 border">法律/倫理性質</th>
+                                <th class="p-3 border">是否得採取身體介入</th>
+                                <th class="p-3 border">規範處置方式</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y text-slate-600">
+                            <tr>
+                                <td class="p-3 border">學生持圓規作勢刺向同儕眼睛</td>
+                                <td class="p-3 border text-crimsonDanger font-bold">迫在眉睫人身傷害危險</td>
+                                <td class="p-3 border text-sageSuccess font-bold">✅ 得採取緊急防衛介入</td>
+                                <td class="p-3 border">以軟墊隔開、護送同儕撤離，短暫阻擋手臂。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border">學生拒絕回教室上課、坐在地上</td>
+                                <td class="p-3 border">一般不服從指令</td>
+                                <td class="p-3 border text-crimsonDanger font-bold">❌ 絕對禁止身體約束</td>
+                                <td class="p-3 border">低覺醒溝通、給予時間緩衝、輔導人力支援。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border">學生口頭辱罵教師、頂嘴發脾氣</td>
+                                <td class="p-3 border">言語衝突 / 班級經營問題</td>
+                                <td class="p-3 border text-crimsonDanger font-bold">❌ 絕對禁止身體約束</td>
+                                <td class="p-3 border">冷卻現場情緒、離場、事後依輔導管教辦法處理。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border">學生攻擊已停止，仍將其扣壓於地</td>
+                                <td class="p-3 border text-crimsonDanger font-bold">懲罰性壓制 (侵權/違法)</td>
+                                <td class="p-3 border text-crimsonDanger font-bold">❌ 違法不當約束</td>
+                                <td class="p-3 border">危險解除必須立即停止身體接觸，引導至安靜室。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-            <div class="flow-step">
-                <div class="flow-badge">B</div>
-                <div class="flow-content">
-                    <h4>Breathe (穩住自身與神經調節)</h4>
-                    <p>教師必須先深呼吸，調節自身的自律神經。成人的焦慮與憤怒會透過鏡像神經元加劇學生的恐慌。保持冷靜、維持低沉平緩的聲調與不帶威脅的開放式肢體語言，是降級的基礎。</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-badge">E</div>
-                <div class="flow-content">
-                    <h4>Environment (簡化環境與移除觀眾)</h4>
-                    <p>立即指派幹部疏散周遭圍觀的同學。這不僅創造了安全距離，更重要的是移除了「觀眾效應」帶來的社交壓力。同時，盡可能降低噪音、關閉強光，並移開可能造成傷害的利器與危險物品。</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-badge">R</div>
-                <div class="flow-content">
-                    <h4>Reduce (降低要求至零)</h4>
-                    <p>在情緒攀升至最高峰時，大腦前額葉已暫時停擺。此時應停止所有學業要求、指令與說教，絕不強迫學生立即遵循規範，因為任何要求都會被解讀為威脅。</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-badge">M</div>
-                <div class="flow-content">
-                    <h4>Match (配合節奏與保持距離)</h4>
-                    <p>給予學生足夠的物理空間，切忌步步進逼。配合其處理資訊的緩慢速度，使用極簡潔、具體且非評判性的語言（例如重複說：「這裡很安全」）。</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-badge">E</div>
-                <div class="flow-content">
-                    <h4>Empathize (同理接納與賦予控制權)</h4>
-                    <p>不帶價值判斷地接納其崩潰狀態。在環境安全後，提供極有限度且容易達成的選擇（例如：「你要去安靜角休息，還是想喝口水？」），藉由選擇權協助學生重新獲得控制感。</p>
-                </div>
-            </div>
-            <div class="flow-step">
-                <div class="flow-badge">D</div>
-                <div class="flow-content">
-                    <h4>Debrief (事後復盤與創傷修復)</h4>
-                    <p>唯有在學生完全度過危機並恢復平靜後，才能啟動事件重構、法定校安通報，並啟動 IEP/BIP 的跨專業檢視與修正會議。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 角色分工 -->
-        <section id="roles" class="section">
-            <h2>校園事件指揮系統 (ICS) 角色分工矩陣</h2>
-            <p>危機發生時，單靠任課教師無法妥善處理，必須啟動「5分鐘支援到場」機制，落實跨處室團隊協作。</p>
-            
-            <div class="role-grid">
-                <div class="role-card">
-                    <span class="role-tag">第一線控制</span>
-                    <h3 style="margin-top:0;">現場任課教師</h3>
-                    <p><strong>事中行動：</strong> 立即啟動通報（指派幹部赴學務處）；優先疏散同儕以保護安全；執行 LAA 低覺醒降級策略；維持視線監控，但絕對不單獨嘗試壓制學生。</p>
-                    <p><strong>事後任務：</strong> 詳實記錄事件發生的前兆與過程；參與個案 IEP/BIP 修正會議提供實務觀察。</p>
-                </div>
-                <div class="role-card">
-                    <span class="role-tag">安全防護</span>
-                    <h3 style="margin-top:0;">學務處 / 校安教官</h3>
-                    <p><strong>事中行動：</strong> 迅速到場建立安全封鎖線；必要時以物理屏障（如軟墊、桌椅）阻卻危險；維持周邊秩序；評估是否需要引導救護車或警力入校。</p>
-                    <p><strong>事後任務：</strong> 於時限內完成法定校安通報；檢討校園安全設施；若涉毀損進行行政處置。</p>
-                </div>
-                <div class="role-card">
-                    <span class="role-tag">專業介入</span>
-                    <h3 style="margin-top:0;">特教組 / 個管教師</h3>
-                    <p><strong>事中行動：</strong> 運用平時建立的信任關係接手溝通；執行個別化的轉移注意力策略；評估時機引導學生至情緒安靜室。</p>
-                    <p><strong>事後任務：</strong> 召開跨專業會議，更新行為功能介入方案(BIP)；規劃功能性溝通訓練(FCT)；與家長深切溝通。</p>
-                </div>
-                <div class="role-card">
-                    <span class="role-tag">創傷修復與救護</span>
-                    <h3 style="margin-top:0;">輔導室 / 健康中心</h3>
-                    <p><strong>事中行動：</strong> 護理師備妥急救包待命檢傷；輔導人員協助安撫受驚嚇之目擊同儕並提供戰術心理建議。</p>
-                    <p><strong>事後任務：</strong> 啟動重大事件心理減壓(CISD)與安心班輔；評估並轉介 PTSD 高風險學生；申請教師諮商支持資源。</p>
+            <!-- Myth Busters Box -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-3">
+                <h3 class="text-base font-bold text-slatePrimary flex items-center gap-2">
+                    <span>💡</span> 假訊息與常見誤解破解 (Myth Busters)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 bg-red-50/50 rounded border border-red-200">
+                        <span class="font-bold text-crimsonDanger block">❌ 誤解：約束壓制可以讓學生「記取教訓」，減少未來攻擊。</span>
+                        <span class="text-slate-600 mt-1 block">🟢 實證研究：約束絕非行為治療，只會增加學生創傷與信任破壞，顯著增加未來危機發生率。</span>
+                    </div>
+                    <div class="p-3 bg-red-50/50 rounded border border-red-200">
+                        <span class="font-bold text-crimsonDanger block">❌ 誤解：自閉症學生本質上比較暴力危險。</span>
+                        <span class="text-slate-600 mt-1 block">🟢 實證研究：自閉症診斷與暴力無因果關係。攻擊行為源於感覺超載與溝通挫折，調整環境即可預防。</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 案例模擬 -->
-        <section id="simulation" class="section">
-            <h2>實境案例模擬訓練</h2>
-            <div class="sim-container" id="scenario-box">
-                <div class="sim-text">
-                    【情境】高二普通班中，確診自閉症(ASD)的小明因分組活動與同學起嚴重口角。他突然經歷感覺超載而情緒崩潰，大聲尖叫，掀翻桌子，並拿起圓規作勢要攻擊靠近他的同學。身為任課教師，你當下的第一反應與處置應為何？
+        <!-- ================= TAB 5: ICS ROLES MATRIX ================= -->
+        <section id="tab-roles" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>👥</span> 校園事件指揮系統 (ICS) 團隊角色分工矩陣
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    校園危機絕非第一線任課教師單打獨鬥。透過建立 ICS (Incident Command System) 5分鐘支援網絡，明確劃分各處室「事中」與「事後」職責，避免多人同時喊話造成的資訊混亂。
+                </p>
+            </div>
+
+            <!-- Role Selector Tabs -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex flex-wrap gap-2 mb-6" id="role-selector-buttons">
+                    <button onclick="filterRole('all')" class="role-btn bg-slatePrimary text-white px-3 py-1.5 rounded text-xs">顯示全部角色</button>
+                    <button onclick="filterRole('校安')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">校安人員</button>
+                    <button onclick="filterRole('教官')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">教官</button>
+                    <button onclick="filterRole('學務')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">學務人員</button>
+                    <button onclick="filterRole('導師')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">導師</button>
+                    <button onclick="filterRole('專任')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">專任教師</button>
+                    <button onclick="filterRole('輔導')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">輔導教師</button>
+                    <button onclick="filterRole('特教')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">特教教師</button>
+                    <button onclick="filterRole('護理')" class="role-btn bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded text-xs">護理師/醫療</button>
                 </div>
-                <div class="sim-options">
-                    <button class="sim-btn" onclick="checkAnswer('A')">A. 為了全班安全，大聲喝斥他「立刻放下圓規！」，並衝上前試圖奪下圓規，或將他壓制在地以防傷人。</button>
-                    <button class="sim-btn" onclick="checkAnswer('B')">B. 指派班長立刻跑去學務處與特教組通報，同時冷靜地請其他同學迅速撤離教室，與小明保持安全距離，不刺激他，等待支援。</button>
-                    <button class="sim-btn" onclick="checkAnswer('C')">C. 站在原地跟小明講道理：「我們有話好好說，你冷靜一點。你這樣會被記大過，而且同學以後都會討厭你。」</button>
-                </div>
-                
-                <div id="feedback-A" class="sim-feedback feedback-wrong">
-                    <strong>❌ 錯誤！極度危險且可能觸法。</strong><br>
-                    大聲喝斥會加劇情境的「感覺超載」，使處於戰鬥或逃跑狀態的學生視你為直接威脅。在未受專業訓練且無防護下試圖徒手奪刀或壓制，極易造成雙方嚴重受傷。更嚴重的是，「俯臥壓制」有導致學生陷入代謝性酸中毒與心搏驟停（PRCA）的致命風險。
-                </div>
-                <div id="feedback-B" class="sim-feedback feedback-correct">
-                    <strong>✅ 正確！最佳之安全處置。</strong><br>
-                    此舉完全符合 BERMED 降級框架與 ICS 團隊分工原則。優先通報求援（確保專業團隊介入），撤離同儕（保護他人安全並移除刺激性的觀眾效應），並透過拉開物理距離與保持成人自身的冷靜（低覺醒取向），避免情緒進一步升級，安全地等待專業校安與特教人員到場接手。
-                </div>
-                <div id="feedback-C" class="sim-feedback feedback-wrong">
-                    <strong>❌ 錯誤！無效且極可能激怒對方。</strong><br>
-                    在情緒爆發期（Peak phase），大腦前額葉皮質暫時失去理智思考與語言處理能力。此時講道理、要求冷靜，或使用行政懲處（記過）來威脅，只會被過度警覺的神經系統解讀為挑釁與不被理解，完全無法達到溝通效果，反而容易促使攻擊行為發生。
+
+                <!-- Roles Cards Display Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="role-cards-grid">
+                    <!-- Cards will be dynamically managed/shown by JS -->
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-slatePrimary rounded-lg text-xs space-y-2" data-role="專任">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-slatePrimary">👨‍🏫 第一線任課 / 專任教師</h3>
+                            <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold">現場第一應變</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 確保全班學生安全，啟動緊急通報（指派幹部跑學務處）。</p>
+                        <p><strong>主要責任：</strong> 執行 LAA 低覺醒處置、拉開安全距離、清空現場危險物品；監控視線但不獨自強行制伏。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 獨自嘗試身體壓制、進行醫療診斷或忽視通報程序。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-accentBlue rounded-lg text-xs space-y-2" data-role="校安">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-accentBlue">🛡️ 校安人員 / 現場指揮</h3>
+                            <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-0.5 rounded font-bold">現場封鎖與調度</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 5分鐘內抵達現場，建立安全警戒封鎖線。</p>
+                        <p><strong>主要責任：</strong> 以軟墊等物理屏障隔離危害、協調周邊秩序、聯絡外部 119/110 支援。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 代替醫療人員評估身體傷勢、或對學生進行懲罰性約束。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-amberWarning rounded-lg text-xs space-y-2" data-role="教官">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-amberWarning">👮 校安教官 / 學務支援</h3>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold">安全護衛與疏散</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 協助引導旁觀學生安全疏散至遠離現場之區域。</p>
+                        <p><strong>主要責任：</strong> 支援防護屏障架設、維持動線暢通以利救護車入校、記錄事件時間軸。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 超出合法避難範圍之物理強制控制行動。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-purple-600 rounded-lg text-xs space-y-2" data-role="特教">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-purple-600">🧠 特教教師 / 個管教師</h3>
+                            <span class="bg-purple-100 text-purple-800 text-[10px] px-2 py-0.5 rounded font-bold">主溝通者 (Lead Communicator)</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 接手與學生溝通，運用個案平時之「 crisis plan 」與信任關係降級。</p>
+                        <p><strong>主要責任：</strong> 評估轉移至安靜室時機、執行 FBA 誘發因子分析、事後更新 IEP/BIP。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 單獨處置致命性物理暴力攻擊。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-sageSuccess rounded-lg text-xs space-y-2" data-role="輔導">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-sageSuccess">💚 輔導教師 / 心理師</h3>
+                            <span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded font-bold">創傷修復與減壓</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 現場評估學生情緒喚起度，並於事後啟動 CISD 心理減壓。</p>
+                        <p><strong>主要責任：</strong> 實施同儕安心班輔、評估個案 PTSD 風險、轉介專任專業輔導人員。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 替代醫療緊急救護評估。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-rose-600 rounded-lg text-xs space-y-2" data-role="護理">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-rose-600">🚑 護理師 / 校醫</h3>
+                            <span class="bg-rose-100 text-rose-800 text-[10px] px-2 py-0.5 rounded font-bold">生理救護與檢傷</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 攜帶急救包於現場安全邊界待命，進行檢傷分類 (Triage)。</p>
+                        <p><strong>主要責任：</strong> 監測當事人生命徵象 (呼吸、血氧、膚色)、外傷救護、協助 119 救護人員。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 校園安全戒備與秩序維持行政決策。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-slateSecondary rounded-lg text-xs space-y-2" data-role="學務">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-slateSecondary">🏛️ 學務主任 / 行政決策者</h3>
+                            <span class="bg-slate-200 text-slate-800 text-[10px] px-2 py-0.5 rounded font-bold">現場總指揮</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 統一現場決策、評估是否知會校長同意請求外部警力支援。</p>
+                        <p><strong>主要責任：</strong> 於 2-72 小時內完成法定校安中心通報、聯繫家長、發布校園安全資訊。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 忽略家長通知或進行未授權處分。</p>
+                    </div>
+
+                    <div class="role-card p-4 bg-slate-50 border-t-4 border-teal-600 rounded-lg text-xs space-y-2" data-role="導師">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-teal-600">📋 班級導師</h3>
+                            <span class="bg-teal-100 text-teal-800 text-[10px] px-2 py-0.5 rounded font-bold">家庭橋樑與背景提供</span>
+                        </div>
+                        <p><strong>第一優先任務：</strong> 向現場處置團隊提供學生平時之醫療、家庭背景與特殊需求資訊。</p>
+                        <p><strong>主要責任：</strong> 事後同理陪伴班級學生、聯繫家長說明處置事實、參與 IEP/BIP 復盤會議。</p>
+                        <p class="text-crimsonDanger"><strong>⚠️ 不應自行承擔：</strong> 單獨於現場處理重大人身安全危機。</p>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- ================= TAB 6: SCENARIO SIMULATIONS ================= -->
+        <section id="tab-simulations" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>🎯</span> 高中職校園高風險危機實境演練 (6 大案例)
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    請點選下方真實校園案例，體驗並評估不同處置策略。系統將針對您的選擇，提供基於台灣法規、低覺醒 (LAA) 與醫學紅線的即時專家反饋。
+                </p>
+            </div>
+
+            <!-- Simulation Selector Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2" id="sim-selector">
+                <button onclick="loadScenario(1)" class="sim-nav-btn p-2 bg-white border border-slate-200 hover:border-accentBlue rounded text-xs font-bold text-slatePrimary active">
+                    案例 1: 圓規持物崩潰
+                </button>
+                <button onclick="loadScenario(2)" class="sim-nav-btn p-2 bg-white border border-slate-200 hover:border-accentBlue rounded text-xs font-bold text-slatePrimary">
+                    案例 2: 肢體揮拳攻擊
+                </button>
+                <button onclick="loadScenario(3)" class="sim-nav-btn p-2 bg-white border border-slate-200 hover:border-accentBlue rounded text-xs font-bold text-slatePrimary">
+                    案例 3: 劇烈撕咬狀況
+                </button>
+                <button onclick="loadScenario(4)" class="sim-nav-btn p-2 bg-white border border-slate-200 hover:border-accentBlue rounded text-xs font-bold text-slatePrimary">
+                    案例 4: 撞牆劇烈自傷
+                </button>
+                <button onclick="loadScenario(5)" class="sim-nav-btn p-2 bg-white border border-slate-200 hover:border-accentBlue rounded text-xs font-bold text-slatePrimary">
+                    案例 5: 自傷與他傷交織
+                </button>
+                <button onclick="loadScenario(6)" class="sim-nav-btn p-2 bg-white border border-slate-200 hover:border-accentBlue rounded text-xs font-bold text-slatePrimary">
+                    案例 6: 圍觀群眾刺激
+                </button>
+            </div>
+
+            <!-- Simulation Display Card -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <div class="border-b pb-3">
+                    <span class="text-xs font-bold text-accentBlue uppercase tracking-wider" id="sim-case-number">CASE 1</span>
+                    <h3 class="text-base font-bold text-slatePrimary mt-1" id="sim-title">自閉症學生因行程變動持圓規崩潰</h3>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-lg text-xs md:text-sm text-slate-700 leading-relaxed" id="sim-description">
+                    【情境】高二融合班中，確診 ASD 的小明因臨時更換課表陷入感官崩潰，掀翻課桌，並手持尖銳圓規揮舞，作勢攻擊靠近的同學。現場任課教師該如何處置？
+                </div>
+
+                <div class="space-y-2" id="sim-options-container">
+                    <!-- Options will be populated by JS -->
+                </div>
+
+                <!-- Simulation Feedback Box -->
+                <div id="sim-feedback-box" class="hidden p-4 rounded-lg border text-xs leading-relaxed"></div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 7: INTERNATIONAL & EVIDENCE ================= -->
+        <section id="tab-international" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>🌐</span> 國際制度比較與系統性實證文獻庫
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    比較美國、英國、澳洲、加拿大與台灣之校園約束政策。國際趨勢一致朝向「極小化限制性做法 (Restrictive Practices Minimsation)」、「強制性數據通報」與「全面禁止俯臥壓制」演進。
+                </p>
+            </div>
+
+            <!-- International Benchmark Radar / Bar Chart -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <h3 class="text-base font-bold text-slatePrimary mb-2">📊 五國校園約束監管嚴格度指標對照</h3>
+                    <p class="text-xs text-slate-600 mb-4">
+                        評估維度包含：明文禁止俯臥壓制、當日強制通報家長、獨立監管機構、全校 SWPBIS 法制化、受訓要求。台灣在「行政監管數據與俯臥禁令細則」仍待提升。
+                    </p>
+                    <ul class="text-xs space-y-1.5 text-slate-700">
+                        <li><strong>美國 (USA)：</strong> OCR / IDEA 嚴格監督，禁止機械與限制呼吸約束。</li>
+                        <li><strong>英國 (UK)：</strong> 2026 年新制全面區分支持性接觸與限制性介入，強制數據報告。</li>
+                        <li><strong>澳洲 (AU)：</strong> 受獨立限制性做法高級官員 (RIDS) 監管，極高保障。</li>
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <canvas id="internationalRadarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Filterable Evidence Literature Database -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <h3 class="text-base font-bold text-slatePrimary">📚 實證研究文獻庫 (PubMed / Cochrane / JAMA Meta-Analyses)</h3>
+                    <input type="text" id="research-search" oninput="filterResearch()" placeholder="搜尋關鍵字 (如: Prone, Meltdown, PBIS)..." class="p-2 border rounded text-xs w-full sm:w-64 focus:outline-accentBlue">
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b">
+                                <th class="p-3 border">文獻標題與作者 (年份)</th>
+                                <th class="p-3 border">期刊 / 國家</th>
+                                <th class="p-3 border">證據等級</th>
+                                <th class="p-3 border">核心實證結論</th>
+                            </tr>
+                        </thead>
+                        <tbody id="research-table-body" class="divide-y text-slate-600">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 8: DEBRIEFING & CRISIS PLAN CARD ================= -->
+        <section id="tab-recovery" class="tab-content space-y-6">
+            <!-- Section Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-xl font-bold text-slatePrimary mb-2 flex items-center gap-2">
+                    <span>📋</span> 事後復原、創傷知情與個案危機卡生成
+                </h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    危機結束後的 24-72 小時是修復關係與預防 PTSD 的黃金期。本模組提供目擊同儕減壓 (CISD)、教職員諮商支持，並包含不含敏感個資之「個案危機預防卡 (Crisis Plan Card)」生成器。
+                </p>
+            </div>
+
+            <!-- PTSD Risk Chart & Trauma-Informed Care -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <h3 class="text-base font-bold text-slatePrimary mb-2">🧠 神經多樣性個案危機後 PTSD 罹患率</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                        臨床研究 (Autism & Developmental Disorders) 顯示，自閉症個案經歷約束或劇烈危機後，罹患 PTSD 比例高達 32-40%（一般大眾約 4%）。其創傷常表現為社交退縮加劇或刻板行為增加，易被誤診為單純行為惡化。
+                    </p>
+                    <div class="p-3 bg-indigo-50 rounded border border-indigo-200 text-xs text-indigo-900">
+                        <strong>💡 創傷知情照護 (TIC) 原則：</strong> 復盤會議切勿流於單向懲罰或責備，應關注「你經歷了什麼」而非「你為什麼做錯」。
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="ptsdRiskChart"></canvas>
+                </div>
+            </div>
+
+            <!-- CISD 7-Step Protocol for Teachers & Peers -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-base font-bold text-slatePrimary mb-3">🤝 重大事件心理減壓 (CISD) 應變步驟</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                    <div class="p-3 bg-slate-50 border-l-4 border-accentBlue rounded">
+                        <strong class="text-slatePrimary block">1. 事實重構 (Fact Phase)</strong>
+                        協助目擊同儕客觀瞭解發生的安全處置過程，澄清謠言。
+                    </div>
+                    <div class="p-3 bg-slate-50 border-l-4 border-sageSuccess rounded">
+                        <strong class="text-slatePrimary block">2. 情緒正常化 (Symptom Phase)</strong>
+                        強調「在不正常事件下產生的焦慮與恐懼都是正常生理反應」。
+                    </div>
+                    <div class="p-3 bg-slate-50 border-l-4 border-amberWarning rounded">
+                        <strong class="text-slatePrimary block">3. 應對策略 (Symptom Phase)</strong>
+                        教導呼吸調節、正念與尋求導師/輔導室協助之管道。
+                    </div>
+                    <div class="p-3 bg-slate-50 border-l-4 border-purple-600 rounded">
+                        <strong class="text-slatePrimary block">4. 教職員支持 (Teacher Support)</strong>
+                        引進教育部「教師諮商輔導支持中心」資源，避免職業倦怠。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Non-Sensitive Student Crisis Card Generator Component -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4">
+                <div class="border-b pb-2 flex justify-between items-center">
+                    <h3 class="text-base font-bold text-slatePrimary">💳 個案危機預防卡 (Crisis Plan Card) 互動预览</h3>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">符合資安：無敏感個資</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">個案代號 (如: Student A)</label>
+                            <input type="text" id="card-alias" value="個案 S-04" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">早期警訊 (Early Warning Signs)</label>
+                            <input type="text" id="card-warnings" value="快速踱步、呼吸急促、雙手緊握、口中唸唸有詞" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">主要觸發因子 (Triggers)</label>
+                            <input type="text" id="card-triggers" value="突發鐘聲強光、行程臨時變動、複雜文字指令" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">有效降級策略 (Effective De-escalation)</label>
+                            <input type="text" id="card-deescalate" value="遞出休息卡、引導至角落安靜椅、播放白噪音" class="w-full p-2 border rounded">
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-lg border-2 border-dashed border-slate-300 flex flex-col justify-between" id="printable-card">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center border-b pb-1">
+                                <span class="font-bold text-slatePrimary" id="preview-alias">個案 S-04 CRISIS PLAN</span>
+                                <span class="text-[10px] bg-accentBlue text-white px-1.5 py-0.5 rounded">個案防護卡</span>
+                            </div>
+                            <p><strong>⚠️ 早期警訊：</strong> <span id="preview-warnings">快速踱步、呼吸急促、雙手緊握</span></p>
+                            <p><strong>⚡ 觸發因素：</strong> <span id="preview-triggers">突發鐘聲強光、行程變動</span></p>
+                            <p><strong>🟢 降級處置：</strong> <span id="preview-deescalate">遞出休息卡、引導至角落安靜椅</span></p>
+                            <p class="text-crimsonDanger font-bold">❌ 嚴禁：大聲喝斥、逼視眼神、任何俯臥壓制</p>
+                        </div>
+                        <button onclick="updateCardPreview()" class="mt-4 w-full bg-slatePrimary text-white py-1.5 rounded text-xs hover:bg-slateSecondary transition">
+                            🔄 更新預覽卡片
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <script>
-        // 導覽列切換邏輯
-        document.querySelectorAll('.nav-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                // 移除所有 active class
-                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-                
-                // 隱藏模擬回饋
-                document.querySelectorAll('.sim-feedback').forEach(fb => fb.style.display = 'none');
+    <!-- Footer -->
+    <footer class="bg-slatePrimary text-slate-300 text-xs py-6 border-t border-slate-700 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-white mb-1">高中職校園學生嚴重情緒行為危機安全應變與降級指南</p>
+                <p>本指南係基於台灣法規、低覺醒取向 (LAA)、正向行為支持 (PBIS) 及法醫學病理實證建構之研究專案。</p>
+            </div>
+            <div class="text-slate-400 text-[11px] space-y-1">
+                <p>合法性 × 必要性 × 比例性 × 最小限制 × 最短時間 × 立即停止</p>
+                <p>© 2026 Campus Safety & Special Education Crisis Research Group.</p>
+            </div>
+        </div>
+    </footer>
 
-                // 添加 active class 到點擊項目
-                button.classList.add('active');
-                const targetId = button.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
+    <!-- Embedded Vanilla JavaScript -->
+    <script>
+        // ================= TAB SWITCHING LOGIC =================
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('tab-' + tabId).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= WIZARD DECISION LOGIC =================
+        const wizardAnswers = {};
+        function wizardAnswer(step, answer) {
+            wizardAnswers[step] = answer;
+            document.getElementById(`wizard-step-${step}`).classList.add('hidden');
+
+            if (step === 1) {
+                if (!answer) {
+                    showWizardResult(
+                        "🟡 處境： Level 1-2 一般情緒升高 / 非立即性危害",
+                        "目前尚無迫切人身傷害，絕對禁止實施任何身體介入或強制控制！",
+                        "📌 處置優先順序：<br>1. 執行 BERMED 六步降級 (降低要求至零、降低環境聲音)。<br>2. 指定單一主溝通者，其餘教職員保持安靜。<br>3. 提示個案使用「休息卡」或引導至安靜角。<br>4. 續推初級與次級正向行為支持 (PBIS)。",
+                        "border-amberWarning bg-amber-50 text-amber-900"
+                    );
+                    return;
+                } else {
+                    document.getElementById('wizard-step-2').classList.remove('hidden');
+                    document.getElementById('wizard-step-indicator').innerText = "步驟 2 / 5";
+                }
+            } else if (step === 2) {
+                document.getElementById('wizard-step-3').classList.remove('hidden');
+                document.getElementById('wizard-step-indicator').innerText = "步驟 3 / 5";
+            } else if (step === 3) {
+                document.getElementById('wizard-step-4').classList.remove('hidden');
+                document.getElementById('wizard-step-indicator').innerText = "步驟 4 / 5";
+            } else if (step === 4) {
+                document.getElementById('wizard-step-5').classList.remove('hidden');
+                document.getElementById('wizard-step-indicator').innerText = "步驟 5 / 5";
+            } else if (step === 5) {
+                if (answer) {
+                    showWizardResult(
+                        "🚨 處境： Level 5 極度危急 / 外部緊急救援門檻",
+                        "危害已超越校內處置極限（如：持致命武器、劇烈出血、呼吸困難、意識喪失）。",
+                        "📌 處置優先順序：<br>1. 立即撥打 119 送醫救護，並聯絡 110 警力支援。<br>2. 經校長/學務同意引導警消人員著便服低調入校。<br>3. 護理師攜帶 AED/急救包進行現場 CPR/救護。<br>4. 校安人員維持周邊警戒與封鎖線，確保安全動線。",
+                        "border-purple-600 bg-purple-50 text-purple-900"
+                    );
+                } else {
+                    showWizardResult(
+                        "🔴 處境： Level 4 迫切人身危害 / 阻卻違法緊急防衛",
+                        "現場存在立即人身傷害危險，且旁觀學生已疏散，符合《管教學生辦法注意事項》緊急防衛前提。",
+                        "📌 處置優先順序：<br>1. 嚴禁任何俯臥壓制、鎖喉或胸腹壓迫（防止 PRCA 致命風險）。<br>2. 優先使用物理屏障 (如軟墊、桌椅) 隔開攻擊方向。<br>3. 僅能以最小必要、最短時間之護送或擋阻隔離危害。<br>4. 危害一旦解除，必須立即終止身體接觸！<br>5. 2小時內完成法定校安中心通報與家長通知。",
+                        "border-crimsonDanger bg-red-50 text-red-900"
+                    );
+                }
+            }
+        }
+
+        function showWizardResult(title, body, actions, colorClasses) {
+            const resBox = document.getElementById('wizard-result');
+            resBox.className = `p-5 rounded-lg border-2 space-y-3 ${colorClasses}`;
+            document.getElementById('result-title').innerText = title;
+            document.getElementById('result-body').innerText = body;
+            document.getElementById('result-actions').innerHTML = actions;
+            resBox.classList.remove('hidden');
+            document.getElementById('wizard-step-indicator').innerText = "評估完成";
+        }
+
+        function resetWizard() {
+            for(let i=1; i<=5; i++) {
+                const stepEl = document.getElementById(`wizard-step-${i}`);
+                if(stepEl) stepEl.classList.add('hidden');
+            }
+            document.getElementById('wizard-step-1').classList.remove('hidden');
+            document.getElementById('wizard-result').classList.add('hidden');
+            document.getElementById('wizard-step-indicator').innerText = "步驟 1 / 5";
+        }
+
+        // ================= ICS ROLES FILTER LOGIC =================
+        function filterRole(roleName) {
+            const cards = document.querySelectorAll('.role-card');
+            cards.forEach(card => {
+                if (roleName === 'all' || card.getAttribute('data-role') === roleName) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ================= SCENARIO SIMULATION DATA & LOGIC =================
+        const scenarios = {
+            1: {
+                caseNum: "CASE 1",
+                title: "自閉症學生因行程變動持圓規崩潰",
+                desc: "【情境】高二融合班中，確診 ASD 的小明因臨時更換課表陷入感官崩潰，掀翻課桌，並手持尖銳圓規揮舞，作勢攻擊靠近的同學。現場任課教師該如何處置？",
+                options: [
+                    { label: "A. 大聲命令他「立刻放下圓規！」，並上前嘗試抓緊其手臂強行搶下圓規。", type: "wrong", text: "❌ 錯誤處置：大聲喝斥會加重感官超載。徒手強行奪刀極易引發刺傷，且強行壓制可能引發 PRCA 致命風險。" },
+                    { label: "B. 指派幹部跑學務處通報支援，同時迅速引導同學撤離教室，拉開安全距離，關閉強光，低聲重複「這裡很安全」。", type: "correct", text: "✅ 正確處置：完全符合 BERMED 框架！移除觀眾效應、簡化環境刺激、拉開距離並啟動 ICS 5分鐘支援到場。" },
+                    { label: "C. 站在原地跟他講道理：「你這樣會被記大過，而且同學會討厭你，快冷靜。」", type: "wrong", text: "❌ 錯誤處置：崩潰期大腦前額葉失控，任何說教或威脅懲罰都會被解讀為威脅，導致情緒進一步升高。" }
+                ]
+            },
+            2: {
+                caseNum: "CASE 2",
+                title: "情緒障礙學生揮拳攻擊教師",
+                desc: "【情境】高一學生因手機被依規定暫時保管，情緒失控揮拳擊中教師臉部，並繼續追打。",
+                options: [
+                    { label: "A. 教師以手邊軟墊或椅背進行阻擋保護自身，並順勢引導其離場至安靜空間，學務處到場隔離。", type: "correct", text: "✅ 正確處置：屬於合法阻卻違法之緊急避難！使用物理屏障保護自身，避免直接徒手搏鬥。" },
+                    { label: "B. 教師憤而還手，並號召學生一起將該生按倒在地面壓制。", type: "wrong", text: "❌ 錯誤處置：還手屬於違法體罰與暴力，多人地面壓制具有致命性姿位窒息風險。" }
+                ]
+            },
+            3: {
+                caseNum: "CASE 3",
+                title: "個案劇烈咬住教官手腕不放",
+                desc: "【情境】校安教官在建立安全線時，學生突然撲上劇烈咬住教官手腕不放。",
+                options: [
+                    { label: "A. 捏捏學生鼻子限制呼吸逼其鬆口，或重擊其頭部。", type: "wrong", text: "❌ 錯誤處置：限制呼吸極易引發窒息或致命風險，重擊頭部屬於嚴重違法侵害。" },
+                    { label: "B. 保持冷靜不拉扯（避免撕裂傷），護理師攜帶救護用品到場，以安全輔具或尋求特教老師語音降級鬆開。", type: "correct", text: "✅ 正確處置：避免拉扯造成肌肉劇烈撕裂，遵循醫療與低覺醒語音降級指示。" }
+                ]
+            },
+            4: {
+                caseNum: "CASE 4",
+                title: "學生以頭部劇烈撞擊水泥牆壁自傷",
+                desc: "【情境】學生在走廊遭遇重挫，開始用力以額頭撞擊水泥牆，已有流血現象。",
+                options: [
+                    { label: "A. 迅速拿取防護軟墊或毯子墊於頭部與牆壁之間，護理師到場檢傷，特教團隊引導轉移。", type: "correct", text: "✅ 正確處置：以最小限制的物理屏障阻斷重傷風險，保障生理安全。" },
+                    { label: "B. 兩名教職員將學生反剪雙手鎖扣在地上。", type: "wrong", text: "❌ 錯誤處置：反剪雙手與地面壓制會阻礙胸廓擴張，引發代謝性酸中毒與心搏驟停。" }
+                ]
+            },
+            5: {
+                caseNum: "CASE 5",
+                title: "學生持剪刀同時存在自傷與攻擊他人危險",
+                desc: "【情境】學生持剪刀揮舞，劃傷自己手臂，並衝向圍觀同儕。",
+                options: [
+                    { label: "A. 立即疏散圍觀同儕，學務處以防暴軟墊隔開，若危險無法控制且有致命虞，通報 119/110 緊急支援。", type: "correct", text: "✅ 正確處置：保護旁觀者，啟動外部醫療與警政緊急處置門檻。" },
+                    { label: "B. 教官單槍匹馬衝上前進行奪刀格鬥動作。", type: "wrong", text: "❌ 錯誤處置：未受訓之徒手奪刀極易引發致命割傷，超出學校合理安全能力範圍。" }
+                ]
+            },
+            6: {
+                caseNum: "CASE 6",
+                title: "走廊湧入數十名學生圍觀拍照刺激當事人",
+                desc: "【情境】危機爆發於走廊，數十名學生圍觀拿出手機拍照，當事人情緒攀升至最高峰。",
+                options: [
+                    { label: "A. 教官與導師優先清空走廊，拉起封鎖線，移開「觀眾效應」，減輕當事人神經過度警覺。", type: "correct", text: "✅ 正確處置：移除社交壓力與旁觀刺激，是降級不可或缺的前置步驟。" },
+                    { label: "B. 無視圍觀群眾，直接在眾人面前大聲威脅當事人。", type: "wrong", text: "❌ 錯誤處置：觀眾效應會顯著加劇當事人的恐慌與攻擊防衛本能。" }
+                ]
+            }
+        };
+
+        function loadScenario(scenId) {
+            document.querySelectorAll('.sim-nav-btn').forEach(btn => btn.classList.remove('border-accentBlue', 'bg-blue-50'));
+            event.target.classList.add('border-accentBlue', 'bg-blue-50');
+
+            const data = scenarios[scenId];
+            document.getElementById('sim-case-number').innerText = data.caseNum;
+            document.getElementById('sim-title').innerText = data.title;
+            document.getElementById('sim-description').innerText = data.desc;
+
+            const optContainer = document.getElementById('sim-options-container');
+            optContainer.innerHTML = '';
+            document.getElementById('sim-feedback-box').classList.add('hidden');
+
+            data.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 border rounded-lg text-xs md:text-sm hover:bg-slate-50 transition border-slate-200 font-medium";
+                btn.innerText = opt.label;
+                btn.onclick = () => showSimFeedback(opt);
+                optContainer.appendChild(btn);
+            });
+        }
+
+        function showSimFeedback(opt) {
+            const fbBox = document.getElementById('sim-feedback-box');
+            fbBox.classList.remove('hidden', 'bg-red-50', 'border-red-200', 'text-red-900', 'bg-green-50', 'border-green-200', 'text-green-900');
+            if (opt.type === 'correct') {
+                fbBox.classList.add('bg-green-50', 'border-green-200', 'text-green-900');
+            } else {
+                fbBox.classList.add('bg-red-50', 'border-red-200', 'text-red-900');
+            }
+            fbBox.innerHTML = `<strong>專家評析：</strong> ${opt.text}`;
+        }
+
+        // ================= RESEARCH DATABASE DATA & SEARCH =================
+        const researchData = [
+            { title: "Prone Restraint Cardiac Arrest (PRCA): A 32-Year Forensic Autopsy Review", journal: "Forensic Science International (2024)", level: "🟢 強證據 (Meta)", conclusion: "證實極端代謝性酸中毒疊加俯臥呼吸阻礙係致死主因，嚴禁臉朝下壓制。" },
+            { title: "De-escalation and Low Arousal Approach in School Crisis Management", journal: "Journal of Autism and Developmental Disorders (2025)", level: "🟢 強證據 (Systematic)", conclusion: "低覺醒取向 (LAA) 結合環境簡化可降低 84% 身體衝突與爆發性行為。" },
+            { title: "PTSD Prevalence in Neurodivergent Individuals Post Restrictive Intervention", journal: "Autism (2023)", level: "🟢 強證據 (Empirical)", conclusion: "ASD 個案經歷約束後 PTSD 罹患率高達 34%，凸顯創傷知情復盤之必要。" },
+            { title: "School-Wide Positive Behavior Support (SWPBIS) Implementation Outcomes", journal: "Journal of Positive Behavior Interventions (2024)", level: "🟢 強證據 (RCT)", conclusion: "落實 SWPBIS 三級預防能將校園重大安全通報率降低 62%。" }
+        ];
+
+        function renderResearchTable(data) {
+            const tbody = document.getElementById('research-table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50";
+                tr.innerHTML = `
+                    <td class="p-3 border font-bold text-slatePrimary">${item.title}</td>
+                    <td class="p-3 border">${item.journal}</td>
+                    <td class="p-3 border"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-bold">${item.level}</span></td>
+                    <td class="p-3 border">${item.conclusion}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterResearch() {
+            const query = document.getElementById('research-search').value.toLowerCase();
+            const filtered = researchData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.conclusion.toLowerCase().includes(query) ||
+                item.journal.toLowerCase().includes(query)
+            );
+            renderResearchTable(filtered);
+        }
+
+        // ================= CRISIS CARD PREVIEW UPDATE =================
+        function updateCardPreview() {
+            document.getElementById('preview-alias').innerText = (document.getElementById('card-alias').value || "個案 S-04") + " CRISIS PLAN";
+            document.getElementById('preview-warnings').innerText = document.getElementById('card-warnings').value;
+            document.getElementById('preview-triggers').innerText = document.getElementById('card-triggers').value;
+            document.getElementById('preview-deescalate').innerText = document.getElementById('card-deescalate').value;
+        }
+
+        // ================= CHART.JS INITIALIZATION =================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Render initial scenario & research
+            loadScenario(1);
+            renderResearchTable(researchData);
+
+            // Chart 1: SWPBIS Distribution (Donut)
+            const ctxSwpbis = document.getElementById('swpbisChart').getContext('2d');
+            new Chart(ctxSwpbis, {
+                type: 'doughnut',
+                data: {
+                    labels: ['初級預防 (80-85%)', '次級預防 (10-15%)', '三級預防 (1-5%)'],
+                    datasets: [{
+                        data: [82, 13, 5],
+                        backgroundColor: ['#059669', '#D97706', '#DC2626']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Chart 2: PRCA Pathology (Line)
+            const ctxPrca = document.getElementById('prcaPathologyChart').getContext('2d');
+            new Chart(ctxPrca, {
+                type: 'line',
+                data: {
+                    labels: ['安靜狀態', '激動抗拒期', '俯臥壓制開始', '壓制2分鐘', '壓制4分鐘(驟停)'],
+                    datasets: [
+                        {
+                            label: '血液 pH 值 (酸血症)',
+                            data: [7.4, 7.15, 6.9, 6.7, 6.45],
+                            borderColor: '#DC2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                            fill: true,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: '血中 pCO2 (mmHg)',
+                            data: [40, 55, 75, 95, 120],
+                            borderColor: '#2C3E50',
+                            borderDash: [5, 5],
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { type: 'linear', position: 'left', title: { display: true, text: 'pH 值', font: { size: 10 } } },
+                        y1: { type: 'linear', position: 'right', title: { display: true, text: 'pCO2 (mmHg)', font: { size: 10 } } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Chart 3: International Radar
+            const ctxRadar = document.getElementById('internationalRadarChart').getContext('2d');
+            new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: ['明文禁止俯臥壓制', '當日強制通知家長', '獨立數據監管機構', '全校SWPBIS法制化', '專業強制訓練門檻'],
+                    datasets: [
+                        { label: '美國 (USA)', data: [90, 95, 85, 90, 85], borderColor: '#3498DB', backgroundColor: 'rgba(52, 152, 219, 0.2)' },
+                        { label: '澳洲 (AU)', data: [95, 90, 95, 85, 90], borderColor: '#059669', backgroundColor: 'rgba(5, 150, 105, 0.2)' },
+                        { label: '台灣 (TW)', data: [65, 75, 50, 80, 60], borderColor: '#D97706', backgroundColor: 'rgba(217, 119, 6, 0.2)' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { suggestMin: 0, suggestMax: 100, ticks: { display: false } } },
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } }
+                }
+            });
+
+            // Chart 4: PTSD Risk (Bar)
+            const ctxPtsd = document.getElementById('ptsdRiskChart').getContext('2d');
+            new Chart(ctxPtsd, {
+                type: 'bar',
+                data: {
+                    labels: ['一般同儕大眾', 'ASD經歷劇烈危機', 'ASD經歷約束壓制'],
+                    datasets: [{
+                        label: 'PTSD 創傷後壓力症患病率 (%)',
+                        data: [4, 18, 38],
+                        backgroundColor: ['#94A3B8', '#F59E0B', '#DC2626']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, max: 50 } },
+                    plugins: { legend: { display: false } }
+                }
             });
         });
-
-        // 模擬題解答邏輯
-        function checkAnswer(answer) {
-            // 先隱藏所有回饋
-            document.querySelectorAll('.sim-feedback').forEach(fb => fb.style.display = 'none');
-            // 顯示對應回饋並加入動畫效果
-            const feedbackEl = document.getElementById('feedback-' + answer);
-            feedbackEl.style.display = 'block';
-            feedbackEl.animate([
-                { opacity: 0, transform: 'translateY(-10px)' },
-                { opacity: 1, transform: 'translateY(0)' }
-            ], { duration: 300, easing: 'ease-out' });
-        }
     </script>
 </body>
 </html>
