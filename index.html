@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中職校園情緒行為危機安全應變指南</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 導覽列設計 */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* 核心內容區 */
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            display: none;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 0.8rem 0;
+            font-size: 1.3rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        /* 警告框設計 */
+        .warning-box {
+            background-color: #fdedec;
+            border-left: 6px solid var(--danger-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box h4 {
+            color: var(--danger-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .warning-box ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .warning-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* 角色卡片網格 */
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .role-card {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 4px solid var(--accent-color);
+            transition: box-shadow 0.3s;
+        }
+        
+        .role-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .role-tag {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 模擬互動區設計 */
+        .sim-container {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .sim-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1.7;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .sim-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sim-btn {
+            background: white;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            text-align: left;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+
+        .sim-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .sim-feedback {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 6px;
+            display: none;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .feedback-correct {
+            background-color: #eaeded;
+            border-left: 6px solid var(--success-color);
+        }
+
+        .feedback-wrong {
+            background-color: #fdedec;
+            border-left: 6px solid var(--danger-color);
+        }
+
+        /* 流程圖樣式 */
+        .flow-step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-color);
+            border-radius: 6px;
+            border-left: 4px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .flow-step:hover {
+            border-left-color: var(--accent-color);
+        }
+        
+        .flow-badge {
+            background: var(--accent-color);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(52,152,219,0.3);
+        }
+        
+        .flow-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>校園情緒行為危機安全應變指南</h1>
+        <nav>
+            <button class="nav-btn active" data-target="home">首頁與核心準則</button>
+            <button class="nav-btn" data-target="decision">降級處置流程 (BERMED)</button>
+            <button class="nav-btn" data-target="roles">ICS 角色分工矩陣</button>
+            <button class="nav-btn" data-target="simulation">實境案例模擬</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 首頁 -->
+        <section id="home" class="section active">
+            <h2>核心理念與安全準則</h2>
+            <p>本指南專為台灣高中職教育人員設計。建構於《學校訂定教師輔導與管教學生辦法注意事項》之合法框架上，以「預防與降級（De-escalation）」為核心，確保在身心障礙學生發生嚴重情緒行為危機時，能以合法、安全、最小侵害的方式保護現場所有人。</p>
+            
+            <div class="warning-box">
+                <h4>⚠️ 絕對禁止的危險行為 (法醫學與法律紅線)</h4>
+                <p>法醫學與急診醫學實證指出，極度激動狀態下施加物理限制將導致極端「代謝性酸中毒」無法代償，進而引發致命的<strong>俯臥約束心搏驟停（PRCA）</strong>。因此校園內<strong>嚴格禁止</strong>以下操作：</p>
+                <ul>
+                    <li><strong>俯臥壓制 (Prone Restraint)</strong>：將學生臉朝下壓制於地面，將瞬間阻斷胸廓擴張。</li>
+                    <li><strong>胸腹壓迫</strong>：成人跨坐或以身體重量壓迫學生軀幹，限制其橫膈膜下降。</li>
+                    <li><strong>鎖喉或頸部壓迫</strong>：任何可能干擾呼吸道或頸動脈的行為。</li>
+                </ul>
+            </div>
+
+            <h3>法律保護傘：阻卻違法事由與比例原則</h3>
+            <p>依據教育部2024年修訂之管教辦法，教師僅在「學生攻擊他人、自傷、毀損公物，且<strong>非立即施加強制力不能制止</strong>」之極端緊急情況下，得採取必要之強制阻擋措施。此作為屬「正當防衛」與「緊急避難」，依法不予處罰。但須注意，一旦立即性危險解除，必須立刻停止任何身體介入，切勿將防衛轉化為懲罰性壓制。</p>
+        </section>
+
+        <!-- 危機處置流程 -->
+        <section id="decision" class="section">
+            <h2>危機處置與降級流程 (BERMED 框架)</h2>
+            <p>遭遇 ASD 或 EBD 學生崩潰危機時，切勿以懲罰、說教或大聲喝斥應對，應採取基於神經生理學的「低覺醒取向 (Low Arousal Approach)」，確實執行以下六步驟：</p>
+
+            <div class="flow-step">
+                <div class="flow-badge">B</div>
+                <div class="flow-content">
+                    <h4>Breathe (穩住自身與神經調節)</h4>
+                    <p>教師必須先深呼吸，調節自身的自律神經。成人的焦慮與憤怒會透過鏡像神經元加劇學生的恐慌。保持冷靜、維持低沉平緩的聲調與不帶威脅的開放式肢體語言，是降級的基礎。</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-badge">E</div>
+                <div class="flow-content">
+                    <h4>Environment (簡化環境與移除觀眾)</h4>
+                    <p>立即指派幹部疏散周遭圍觀的同學。這不僅創造了安全距離，更重要的是移除了「觀眾效應」帶來的社交壓力。同時，盡可能降低噪音、關閉強光，並移開可能造成傷害的利器與危險物品。</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-badge">R</div>
+                <div class="flow-content">
+                    <h4>Reduce (降低要求至零)</h4>
+                    <p>在情緒攀升至最高峰時，大腦前額葉已暫時停擺。此時應停止所有學業要求、指令與說教，絕不強迫學生立即遵循規範，因為任何要求都會被解讀為威脅。</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-badge">M</div>
+                <div class="flow-content">
+                    <h4>Match (配合節奏與保持距離)</h4>
+                    <p>給予學生足夠的物理空間，切忌步步進逼。配合其處理資訊的緩慢速度，使用極簡潔、具體且非評判性的語言（例如重複說：「這裡很安全」）。</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-badge">E</div>
+                <div class="flow-content">
+                    <h4>Empathize (同理接納與賦予控制權)</h4>
+                    <p>不帶價值判斷地接納其崩潰狀態。在環境安全後，提供極有限度且容易達成的選擇（例如：「你要去安靜角休息，還是想喝口水？」），藉由選擇權協助學生重新獲得控制感。</p>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-badge">D</div>
+                <div class="flow-content">
+                    <h4>Debrief (事後復盤與創傷修復)</h4>
+                    <p>唯有在學生完全度過危機並恢復平靜後，才能啟動事件重構、法定校安通報，並啟動 IEP/BIP 的跨專業檢視與修正會議。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 角色分工 -->
+        <section id="roles" class="section">
+            <h2>校園事件指揮系統 (ICS) 角色分工矩陣</h2>
+            <p>危機發生時，單靠任課教師無法妥善處理，必須啟動「5分鐘支援到場」機制，落實跨處室團隊協作。</p>
+            
+            <div class="role-grid">
+                <div class="role-card">
+                    <span class="role-tag">第一線控制</span>
+                    <h3 style="margin-top:0;">現場任課教師</h3>
+                    <p><strong>事中行動：</strong> 立即啟動通報（指派幹部赴學務處）；優先疏散同儕以保護安全；執行 LAA 低覺醒降級策略；維持視線監控，但絕對不單獨嘗試壓制學生。</p>
+                    <p><strong>事後任務：</strong> 詳實記錄事件發生的前兆與過程；參與個案 IEP/BIP 修正會議提供實務觀察。</p>
+                </div>
+                <div class="role-card">
+                    <span class="role-tag">安全防護</span>
+                    <h3 style="margin-top:0;">學務處 / 校安教官</h3>
+                    <p><strong>事中行動：</strong> 迅速到場建立安全封鎖線；必要時以物理屏障（如軟墊、桌椅）阻卻危險；維持周邊秩序；評估是否需要引導救護車或警力入校。</p>
+                    <p><strong>事後任務：</strong> 於時限內完成法定校安通報；檢討校園安全設施；若涉毀損進行行政處置。</p>
+                </div>
+                <div class="role-card">
+                    <span class="role-tag">專業介入</span>
+                    <h3 style="margin-top:0;">特教組 / 個管教師</h3>
+                    <p><strong>事中行動：</strong> 運用平時建立的信任關係接手溝通；執行個別化的轉移注意力策略；評估時機引導學生至情緒安靜室。</p>
+                    <p><strong>事後任務：</strong> 召開跨專業會議，更新行為功能介入方案(BIP)；規劃功能性溝通訓練(FCT)；與家長深切溝通。</p>
+                </div>
+                <div class="role-card">
+                    <span class="role-tag">創傷修復與救護</span>
+                    <h3 style="margin-top:0;">輔導室 / 健康中心</h3>
+                    <p><strong>事中行動：</strong> 護理師備妥急救包待命檢傷；輔導人員協助安撫受驚嚇之目擊同儕並提供戰術心理建議。</p>
+                    <p><strong>事後任務：</strong> 啟動重大事件心理減壓(CISD)與安心班輔；評估並轉介 PTSD 高風險學生；申請教師諮商支持資源。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 案例模擬 -->
+        <section id="simulation" class="section">
+            <h2>實境案例模擬訓練</h2>
+            <div class="sim-container" id="scenario-box">
+                <div class="sim-text">
+                    【情境】高二普通班中，確診自閉症(ASD)的小明因分組活動與同學起嚴重口角。他突然經歷感覺超載而情緒崩潰，大聲尖叫，掀翻桌子，並拿起圓規作勢要攻擊靠近他的同學。身為任課教師，你當下的第一反應與處置應為何？
+                </div>
+                <div class="sim-options">
+                    <button class="sim-btn" onclick="checkAnswer('A')">A. 為了全班安全，大聲喝斥他「立刻放下圓規！」，並衝上前試圖奪下圓規，或將他壓制在地以防傷人。</button>
+                    <button class="sim-btn" onclick="checkAnswer('B')">B. 指派班長立刻跑去學務處與特教組通報，同時冷靜地請其他同學迅速撤離教室，與小明保持安全距離，不刺激他，等待支援。</button>
+                    <button class="sim-btn" onclick="checkAnswer('C')">C. 站在原地跟小明講道理：「我們有話好好說，你冷靜一點。你這樣會被記大過，而且同學以後都會討厭你。」</button>
+                </div>
+                
+                <div id="feedback-A" class="sim-feedback feedback-wrong">
+                    <strong>❌ 錯誤！極度危險且可能觸法。</strong><br>
+                    大聲喝斥會加劇情境的「感覺超載」，使處於戰鬥或逃跑狀態的學生視你為直接威脅。在未受專業訓練且無防護下試圖徒手奪刀或壓制，極易造成雙方嚴重受傷。更嚴重的是，「俯臥壓制」有導致學生陷入代謝性酸中毒與心搏驟停（PRCA）的致命風險。
+                </div>
+                <div id="feedback-B" class="sim-feedback feedback-correct">
+                    <strong>✅ 正確！最佳之安全處置。</strong><br>
+                    此舉完全符合 BERMED 降級框架與 ICS 團隊分工原則。優先通報求援（確保專業團隊介入），撤離同儕（保護他人安全並移除刺激性的觀眾效應），並透過拉開物理距離與保持成人自身的冷靜（低覺醒取向），避免情緒進一步升級，安全地等待專業校安與特教人員到場接手。
+                </div>
+                <div id="feedback-C" class="sim-feedback feedback-wrong">
+                    <strong>❌ 錯誤！無效且極可能激怒對方。</strong><br>
+                    在情緒爆發期（Peak phase），大腦前額葉皮質暫時失去理智思考與語言處理能力。此時講道理、要求冷靜，或使用行政懲處（記過）來威脅，只會被過度警覺的神經系統解讀為挑釁與不被理解，完全無法達到溝通效果，反而容易促使攻擊行為發生。
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 導覽列切換邏輯
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有 active class
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+                
+                // 隱藏模擬回饋
+                document.querySelectorAll('.sim-feedback').forEach(fb => fb.style.display = 'none');
+
+                // 添加 active class 到點擊項目
+                button.classList.add('active');
+                const targetId = button.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // 模擬題解答邏輯
+        function checkAnswer(answer) {
+            // 先隱藏所有回饋
+            document.querySelectorAll('.sim-feedback').forEach(fb => fb.style.display = 'none');
+            // 顯示對應回饋並加入動畫效果
+            const feedbackEl = document.getElementById('feedback-' + answer);
+            feedbackEl.style.display = 'block';
+            feedbackEl.animate([
+                { opacity: 0, transform: 'translateY(-10px)' },
+                { opacity: 1, transform: 'translateY(0)' }
+            ], { duration: 300, easing: 'ease-out' });
+        }
+    </script>
+</body>
+</html>
